@@ -6,17 +6,17 @@ const path = require("path");
 function display(){
     console.log("");
     console.log('Please type these commands to perform the following operations');
-    console.log('-----------------------------------'); 
-    console.log('1  -> To read file '); 
-    console.log('2  -> To create file'); 
-    console.log('3  -> To update file'); 
-    console.log('4  -> To delete file'); 
-    console.log('5  -> To create directory'); 
-    console.log('6  -> To delete directory'); 
-    console.log('7  -> To view the directory'); 
-    console.log('8  -> To rename the directory');
-    console.log('9  -> To exit');  
-    console.log('------------------------------------ \n'); 
+    console.log('---------------------------------------'); 
+    console.log('Enter 1  -> To read file '); 
+    console.log('Enter 2  -> To create file'); 
+    console.log('Enter 3  -> To update file'); 
+    console.log('Enter 4  -> To delete file'); 
+    console.log('Enter 5  -> To create directory'); 
+    console.log('Enter 6  -> To delete directory'); 
+    console.log('Enter 7  -> To view the directory'); 
+    console.log('Enter 8  -> To rename the directory');
+    console.log('Enter 9  -> To exit');  
+    console.log('----------------------------------------\n'); 
 }
 display()
 
