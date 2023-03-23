@@ -1,9 +1,11 @@
-const fs = require("fs");
-const process = require("process");
-const path = require("path");
+import * as fs from "fs";
+import * as path from "path";
+import * as process from "process";
 
 function display() {
-  console.log("\n Please type these commands to perform the following operations");
+  console.log(
+    "\n Please type these commands to perform the following operations"
+  );
   console.log("---------------------------------------");
   console.log("Enter '1'  -> To read file ");
   console.log("Enter '2'  -> To create file");
@@ -39,13 +41,15 @@ process.stdin.on("data", (data) => {
     } else if (input[0] === "4") {
       console.log('Enter deleteFile "Foldername/" "Filename" ');
     } else if (input[0] === "5") {
-      console.log('Enter makeDir "Foldername" "path/"');
+      console.log('Enter makeDirectory "Foldername" "path/"');
     } else if (input[0] === "6") {
-      console.log('Enter delDir "Foldername" "path/"');
+      console.log('Enter delDirectory "Foldername" "path/"');
     } else if (input[0] === "7") {
-      console.log('Enter readDir "Foldername" "path/"');
+      console.log('Enter readDirectory "Foldername" "path/"');
     } else if (input[0] === "8") {
-      console.log('Enter renameDir "Old Foldername" "New Foldername" "path/"');
+      console.log(
+        'Enter renameDirectory "Old Foldername" "New Foldername" "path/"'
+      );
     } else {
       console.log("Invalid argument/Syntax");
     }
@@ -61,7 +65,7 @@ process.stdin.on("data", (data) => {
     }
 
     if (input[0] === "createFile") {
-      var str = "";
+      let str = "";
       for (let index = 3; index < input.length; index++) {
         str = str + " " + input[index];
       }
@@ -79,7 +83,7 @@ process.stdin.on("data", (data) => {
       display();
     }
     if (input[0] === "updateFile") {
-      var str = "";
+      let str = "";
       for (let index = 3; index < input.length; index++) {
         str = str + " " + input[index];
       }
@@ -90,14 +94,14 @@ process.stdin.on("data", (data) => {
       );
       display();
     }
-    if (input[0] === "makeDir") {
+    if (input[0] === "makeDirectory") {
       if (!fs.existsSync(pathName + input[2] + input[1])) {
         fs.mkdirSync(pathName + input[2] + input[1]);
       }
       console.log("Directory is created successfully!");
       display();
     }
-    if (input[0] === "delDir") {
+    if (input[0] === "delDirectory") {
       fs.rmdir(pathName + input[2] + input[1], (err) => {
         if (err) {
           throw err;
@@ -106,12 +110,12 @@ process.stdin.on("data", (data) => {
       });
       display();
     }
-    if (input[0] === "readDir") {
+    if (input[0] === "readDirectory") {
       console.log("\n The " + input[1] + " directory consists : ");
       console.log(fs.readdirSync(pathName + input[2] + input[1]));
       display();
     }
-    if (input[0] === "renameDir") {
+    if (input[0] === "renameDirectory") {
       fs.rename(
         pathName + input[3] + input[1],
         pathName + input[3] + input[2],

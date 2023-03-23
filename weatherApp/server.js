@@ -3,15 +3,15 @@ const http = require("http");
 const port = 200;
 const fs = require("fs");
 const path = require("path");
-var weatherData = "";
+let weatherData = "";
 
-function read() {
+function readingFile() {
   const data = fs.readFileSync(path.resolve("weatherDb.txt"), "utf8");
   console.log(path.resolve("weatherDb.txt"));
   weatherData = JSON.parse(data);
 }
 
-read();
+readingFile();
 const myserver = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.end(getRequestData(req));
@@ -22,9 +22,9 @@ myserver.listen(port, () => {
 });
 
 function getRequestData(req) {
-  var location = req.url.substring(1);
-  var str = "/" + location;
-  var weatherDatabase = [
+  let location = req.url.substring(1);
+  let str = "/" + location;
+  let weatherDatabase = [
     {
       location: "",
       tempC: "",
@@ -32,6 +32,7 @@ function getRequestData(req) {
       condition: "",
     },
   ];
+
   if (req.url === "/") {
     console.log(weatherData);
     return JSON.stringify({ weatherData });

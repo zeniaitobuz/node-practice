@@ -1,18 +1,20 @@
 import * as fs from "fs";
 import * as path from "path";
 
-function read() {
+// reading the data
+function readData() {
   const data = fs.readFileSync(path.resolve("weatherDb.txt"), "utf8");
   console.log(path.resolve("weatherDb.txt"));
   if (data.length === 0) {
     console.log("No data present in database");
   }
   console.log("Reading data.. \n");
-  const objectdata = JSON.parse(data);
-  console.log(objectdata);
+  const objectData = JSON.parse(data);
+  console.log(objectData);
 }
 
-function create(location, temp) {
+// creating the data
+function createData(location, temp, feels, condition) {
   fs.readFile(path.resolve("weatherDb.txt"), "utf-8", function (err, database) {
     if (err) {
       console.log(err);
@@ -29,7 +31,7 @@ function create(location, temp) {
           }
         }
       );
-      const input = `[{"location":"${location}","tempC":${temp}}]`;
+      const input = `[{"location":"${location}","tempC":${temp},"feelsLike":${feels},"condition":"${condition}"}]`;
       fs.writeFile(
         path.resolve("weatherDb.txt"),
         input,
@@ -49,7 +51,7 @@ function create(location, temp) {
           }
         }
       );
-      const input = `,{"location":"${location}","tempC":${temp}}]`;
+      const input = `,{"location":"${location}","tempC":${temp},"feelsLike":${feels},"condition":"${condition}"}]`;
       const replaced = database.replace("]", input);
       fs.writeFile(
         path.resolve("weatherDb.txt"),
@@ -63,7 +65,8 @@ function create(location, temp) {
   });
 }
 
-function deletefile(location) {
+//deleting the file
+function deleteFile(location) {
   let data = fs.readFileSync(path.resolve("weatherDb.txt"), "utf-8");
   const arr = JSON.parse(data);
   arr.splice(
@@ -75,7 +78,8 @@ function deletefile(location) {
   });
 }
 
-function update(olddata, updateddata) {
+//updating the data
+function updateData(olddata, updateddata) {
   fs.readFile(path.resolve("weatherDb.txt"), "utf-8", function (err, database) {
     if (err) {
       console.log(err);
@@ -94,7 +98,7 @@ function update(olddata, updateddata) {
   });
 }
 
-read()
-// create('Tripuira','35')
-// update('Tripuira','Tripura')
-// deletefile('Paris')
+// readData()
+// createData('Tripuira','35','30','mist')
+// updateData('Tripuira','Tripura')
+// deleteFile('Paris')

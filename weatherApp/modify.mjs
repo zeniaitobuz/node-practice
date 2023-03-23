@@ -1,36 +1,38 @@
 import { weatherData as weatherDatabase } from "./weatherDatabase.mjs";
 
-let val = {};
+let dataValues = {};
 
 console.log("Original Data->");
 console.log(weatherDatabase);
 console.log("");
 
-function create(location, tempC) {
-  val.location = location;
-  val.tempC = tempC;
-  weatherDatabase.push(val);
+export function createData(location, tempC, feelsLike, condition) {
+  dataValues.location = location;
+  dataValues.tempC = tempC;
+  dataValues.feelsLike = feelsLike;
+  dataValues.condition = condition;
+  weatherDatabase.push(dataValues);
   console.log("Data after insertion->");
   console.log(weatherDatabase);
   console.log("");
 }
 
-function read() {
+export function readData() {
   console.log("Reading data....");
   console.log(weatherDatabase);
   console.log("");
 }
 
-function update(location, newtemp) {
-  var weatherData = (weatherDatabase.find(
-    (value) => value.location == location
-  ).tempC = newtemp);
+export function updateData(location, newTemp) {
+  let weatherData = (weatherDatabase.find(
+    (value) => value.location === location
+  ).tempC = newTemp);
   console.log("Data after updation->");
   console.log(weatherDatabase);
   console.log("");
 }
 
-export function deletedata(location) {
+export function deleteData(location) {
   weatherDatabase.splice(
     weatherDatabase.findIndex((a) => a.location === location),
     1
@@ -40,7 +42,7 @@ export function deletedata(location) {
   console.log("");
 }
 
-// create("Paris", 8);
-// update("Paris", 4);
-// read();
-// deletedata("Paris");
+// createData("Paris", 8, 10, "mist");
+// updateData("Paris", 4);
+// readData();
+// deleteData("Paris");
