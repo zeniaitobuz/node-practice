@@ -1,8 +1,7 @@
-const http = require("http");
-
+import * as http from "http";
+import * as fs from "fs";
+import * as path from "path";
 const port = 200;
-const fs = require("fs");
-const path = require("path");
 let weatherData = "";
 
 function readingFile() {
