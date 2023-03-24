@@ -33,7 +33,6 @@ function getRequestData(req) {
   ];
 
   if (req.url === "/") {
-    console.log(weatherData);
     return JSON.stringify({ weatherData });
   } else if (req.url === str) {
     for (let i = 0; i < weatherData.length; i++) {
@@ -42,7 +41,6 @@ function getRequestData(req) {
         weatherDatabase[0].tempC = weatherData[i].tempC;
         weatherDatabase[0].feelsLike = weatherData[i].feelsLike;
         weatherDatabase[0].condition = weatherData[i].condition;
-        console.log(weatherDatabase);
         return JSON.stringify({ weatherDatabase });
       }
     }

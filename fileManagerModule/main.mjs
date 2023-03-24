@@ -24,7 +24,7 @@ let args = process.argv;
 let pathName = path.dirname(args[1]) + "/";
 process.stdin.on("data", (data) => {
   let input = data.toString().trim().split(" ");
-
+  
   if (data.toString().trimEnd().split(" ")[0] === "9") {
     process.exit();
   } else {
