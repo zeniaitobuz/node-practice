@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from "fs/promises";
 import * as path from "path";
 import * as process from "process";
 
@@ -24,109 +24,155 @@ let args = process.argv;
 let pathName = path.dirname(args[1]) + "/";
 process.stdin.on("data", (data) => {
   let input = data.toString().trim().split(" ");
-  
+  let task = Number(input[0]);
   if (data.toString().trimEnd().split(" ")[0] === "9") {
     process.exit();
   } else {
-    if (input[0] === "1") {
-      console.log('Enter readFile "Foldername/" "Filename" ');
-    } else if (input[0] === "2") {
+    if (task === 1) {
+      console.log('Enter 11 "Foldername/" "Filename" ');
+    } else if (task === 2) {
       console.log(
-        'Enter createFile "Foldername/" "Filename" "text that the file will contain" '
+        'Enter 12 "Foldername/" "Filename" "text that the file will contain" '
       );
-    } else if (input[0] === "3") {
+    } else if (task === 3) {
       console.log(
-        'Enter updateFile "Foldername/" "Filename" "text that will be updated in the file"'
+        'Enter 13 "Foldername/" "Filename" "text that will be updated in the file"'
       );
-    } else if (input[0] === "4") {
-      console.log('Enter deleteFile "Foldername/" "Filename" ');
-    } else if (input[0] === "5") {
-      console.log('Enter makeDirectory "Foldername" "path/"');
-    } else if (input[0] === "6") {
-      console.log('Enter delDirectory "Foldername" "path/"');
-    } else if (input[0] === "7") {
-      console.log('Enter readDirectory "Foldername" "path/"');
-    } else if (input[0] === "8") {
-      console.log(
-        'Enter renameDirectory "Old Foldername" "New Foldername" "path/"'
-      );
+    } else if (task === 4) {
+      console.log('Enter 14 "Foldername/" "Filename" ');
+    } else if (task === 5) {
+      console.log('Enter 15 "Foldername" "path/"');
+    } else if (task === 6) {
+      console.log('Enter 16 "Foldername" "path/"');
+    } else if (task === 7) {
+      console.log('Enter 17 "Foldername" "path/"');
+    } else if (task === 8) {
+      console.log('Enter 18 "Old Foldername" "New Foldername" "path/"');
     } else {
       console.log("Invalid argument/Syntax");
     }
 
-    if (input[0] === "readFile") {
-      try {
-        const data = fs.readFileSync(pathName + input[1] + input[2], "utf8");
-        console.log(data);
-      } catch (err) {
-        console.error(err);
-      }
-      display();
-    }
-
-    if (input[0] === "createFile") {
-      let str = "";
-      for (let index = 3; index < input.length; index++) {
-        str = str + " " + input[index];
-      }
-      fs.writeFileSync(
-        pathName + input[1] + input[2],
-        str,
-        console.log("File is created successfully!")
-      );
-      display();
-    }
-
-    if (input[0] === "deleteFile") {
-      fs.unlinkSync(pathName + input[1] + input[2]);
-      console.log("File deleted successfully!");
-      display();
-    }
-    if (input[0] === "updateFile") {
-      let str = "";
-      for (let index = 3; index < input.length; index++) {
-        str = str + " " + input[index];
-      }
-      fs.writeFileSync(
-        pathName + input[1] + input[2],
-        str,
-        console.log("File is updated successfully!")
-      );
-      display();
-    }
-    if (input[0] === "makeDirectory") {
-      if (!fs.existsSync(pathName + input[2] + input[1])) {
-        fs.mkdirSync(pathName + input[2] + input[1]);
-      }
-      console.log("Directory is created successfully!");
-      display();
-    }
-    if (input[0] === "delDirectory") {
-      fs.rmdir(pathName + input[2] + input[1], (err) => {
-        if (err) {
-          throw err;
+    if (task === 11) {
+      readingFile();
+      async function readingFile() {
+        try {
+          const data = await fs.readFile(
+            pathName + input[1] + input[2],
+            "utf8"
+          );
+          console.log(data);
+        } catch (err) {
+          console.error("Sorry! The file you are trying to read doesn't exist");
         }
-        console.log(`Directory ${input[1]} is deleted!`);
-      });
+        display();
+      }
+    }
+
+    if (task === 12) {
+      creatingFile();
+      async function creatingFile() {
+        let str = "";
+        for (let index = 3; index < input.length; index++) {
+          str = `${str} ${input[index]}`;
+        }
+        await fs.writeFile(
+          pathName + input[1] + input[2],
+          str,
+          console.log("File is created successfully!")
+        );
+      }
       display();
     }
-    if (input[0] === "readDirectory") {
-      console.log("\n The " + input[1] + " directory consists : ");
-      console.log(fs.readdirSync(pathName + input[2] + input[1]));
-      display();
+
+    if (task === 14) {
+      deletingFile();
+      async function deletingFile() {
+        try {
+          await fs.unlink(pathName + input[1] + input[2]);
+          console.log("File deleted successfully!");
+          display();
+        } catch (err) {
+          console.log("Sorry! The file you are trying to delete doesn't exist");
+        }
+      }
     }
-    if (input[0] === "renameDirectory") {
-      fs.rename(
-        pathName + input[3] + input[1],
-        pathName + input[3] + input[2],
-        (err) => {
-          if (err) {
-            console.error(err);
+    if (task === 13) {
+      updatingFile();
+
+      async function updatingFile() {
+        try {
+          let str = "";
+          for (let index = 3; index < input.length; index++) {
+            str = `${str} ${input[index]}`;
           }
+          await fs.writeFile(
+            pathName + input[1] + input[2],
+            str,
+            console.log("File is updated successfully!")
+          );
+        } catch (err) {
+          console.log("Sorry! The file you are trying to update doesn't exist");
         }
-      );
-      console.log("Folder name is updated successfully!");
+        display();
+      }
+    }
+    if (task === 15) {
+      creatingFolder();
+      async function creatingFolder() {
+        await fs.mkdir(pathName + input[2] + input[1]);
+        console.log("Directory is created successfully!");
+      }
       display();
+    }
+    if (task === 16) {
+      deletingFolder();
+
+      async function deletingFolder() {
+        try {
+          await fs.rmdir(pathName + input[2] + input[1]);
+          console.log(`Directory ${input[1]} is deleted!`);
+        } catch (err) {
+          console.log(
+            "Sorry! The folder you are trying to delete doesn't exist"
+          );
+        }
+        display();
+      }
+    }
+    if (task === 17) {
+      readingFolder();
+      async function readingFolder() {
+        try {
+          console.log("\n The " + input[1] + " directory consists : ");
+          console.log(await fs.readdir(pathName + input[2] + input[1]));
+        } catch (err) {
+          console.log("Sorry! The folder you are trying to read doesn't exist");
+        }
+        display();
+      }
+    }
+    if (task === 18) {
+      renameFolder();
+
+      async function renameFolder() {
+        try {
+          await fs.rename(
+            pathName + input[3] + input[1],
+            pathName + input[3] + input[2],
+            (err) => {
+              if (err) {
+                console.error(err);
+              }
+            }
+          );
+          console.log("Folder name is updated successfully!");
+        } catch (err) {
+          console.log(
+            "Sorry! The folder you are trying to rename doesn't exist"
+          );
+        }
+        display();
+      }
     }
   }
 });
